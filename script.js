@@ -15,4 +15,26 @@ function getComputerChoice() {
     }
 }
 
-console.log(getComputerChoice());
+// Function to play a single round
+
+function playRound(playerSelection, computerSelection) {
+    let player = playerSelection.toUpperCase();
+    let computer = computerSelection.toUpperCase();
+    console.log(`Computer chose ${computer} and you chose ${player}`);
+    let decision;
+
+    if ((player === "ROCK" && computer === "SCISSORS") || (player === "PAPER" && computer === "ROCK") || (player === "SCISSORS" && computer === "PAPER")) {
+        return `You Won! ${player} beats ${computer}`
+    }
+
+    else if (player === computer) {
+        return "It's a tie!"
+    }
+
+    else {
+        return `You Lose! ${computer} beats ${player}`
+    }
+}
+
+const playerSelection = "rock";
+console.log(playRound(playerSelection, getComputerChoice()));
