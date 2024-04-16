@@ -1,3 +1,7 @@
+// Global variables
+
+let playerWins = 0, computerWins = 0;
+
 // Function to get the random choice taken by the computer
 
 function getComputerChoice() {
@@ -20,20 +24,29 @@ function getComputerChoice() {
 function playRound(playerSelection, computerSelection) {
     let player = playerSelection.toUpperCase();
     let computer = computerSelection.toUpperCase();
+
     console.log(`Computer chose ${computer} and you chose ${player}`);
 
-    if ((player === "ROCK" && computer === "SCISSORS") || (player === "PAPER" && computer === "ROCK") || (player === "SCISSORS" && computer === "PAPER")) {
-        return `You Won! ${player} beats ${computer}`
+    switch(true) {
+        case player === "ROCK" && computer === "SCISSORS":
+        case player === "PAPER" && computer === "ROCK":
+        case player === "SCISSORS" && computer === "PAPER":
+            playerWins++;
+            return `You Won! ${player} beats ${computer}`;
+        
+        case player === computer:
+            return "It's a tie!"
+        
+        default:
+            computerWins++;
+            return `You Lose! ${computer} beats ${player}`;
     }
 
-    else if (player === computer) {
-        return "It's a tie!"
-    }
-
-    else {
-        return `You Lose! ${computer} beats ${player}`
-    }
 }
 
-let playerSelection = prompt("Please enter your choice out of Rock, Paper, and Scissors");
+let playerSelection = "rock";
+
+// let playerSelection = prompt("Please enter your choice out of Rock, Paper, and Scissors");
 console.log(playRound(playerSelection, getComputerChoice()));
+console.log(`Player wins = ${playerWins}
+Computer wins = ${computerWins}`);
