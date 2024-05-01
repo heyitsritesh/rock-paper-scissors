@@ -1,1 +1,1 @@
-A simple rock, paper, and scissors game written using JS and can be played in browser's console.
+A simple rock, paper, and scissors game written using JS.
