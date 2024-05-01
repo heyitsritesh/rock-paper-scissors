@@ -1,10 +1,11 @@
-// Global variables and inputs
+// Global variables
 
+const rock = document.querySelector("#rock");
+const paper = document.querySelector("#paper");
+const scissors = document.querySelector("#scissors");
+const result = document.querySelector("#result");
+const ul = document.querySelector("ul");
 let playerWins = 0, computerWins = 0;
-
-let playerSelection = prompt("Please enter your choice out of Rock, Paper, and Scissors");
-
-let player = playerSelection.toUpperCase();
 
 // Function to get the random choice taken by the computer
 
@@ -25,62 +26,50 @@ function getComputerChoice() {
 
 // Function to play a single round
 
-function playRound(playerSelection, computerSelection) {
+function playRound(player, computer) {
 
     switch(true) {
-        case player === "ROCK" && computerSelection === "SCISSORS":
-        case player === "PAPER" && computerSelection === "ROCK":
-        case player === "SCISSORS" && computerSelection === "PAPER":
+        case player === "ROCK" && computer === "SCISSORS":
+        case player === "PAPER" && computer === "ROCK":
+        case player === "SCISSORS" && computer === "PAPER":
             playerWins++;
-            return `You Won! ${player} beats ${computerSelection}`;
+            return `You Won! ${player} beats ${computer}`;
         
-        case player === computerSelection:
+        case player === computer:
             return "It's a tie!"
         
         default:
             computerWins++;
-            return `You Lose! ${computerSelection} beats ${player}`;
+            return `You Lose! ${computer} beats ${player}`;
     }
 
 }
 
-// Loop to play 5 times
+// Function to use playRound and display overall winner
 
-function playGame() {
-    for (let i=0; i<5; i++) {
-        console.log(playRound(playerSelection, getComputerChoice()));
+function roundLog(buttonChoice) {
+    const li = document.createElement("li");
+    li.textContent = `${playRound(buttonChoice, getComputerChoice())} - (Player: ${playerWins} | Computer: ${computerWins})`;
+    ul.appendChild(li);
+
+    if (playerWins === 5) {
+        result.textContent = `Player you won the entire game! (Player: ${playerWins} | Computer: ${computerWins})`;
+    } else if (computerWins === 5) {
+        result.textContent = `Computer won the entire game! (Player: ${playerWins} | Computer: ${computerWins})`;
     }
 }
 
-// Making sure input is valid
+// Rock button play
+rock.addEventListener("click", () => {
+    roundLog("ROCK");
+})
 
-if (player === "ROCK" || player === "PAPER" || player === "SCISSORS") {
-    
-    // Invoke the loop and play 5 times
+// Paper button play
+paper.addEventListener("click", () => {
+    roundLog("PAPER");
+})
 
-    playGame();
-
-    // Print the final calculated result
-    
-    if (playerWins > computerWins) {
-        console.log(`RESULT: Player you won the entire game!
-        Your score: ${playerWins}
-        Computer's Score: ${computerWins}`);
-    }
-
-    else if (playerWins === computerWins) {
-        console.log(`RESULT: It's an overall tie!
-        Your score: ${playerWins}
-        Computer's Score: ${computerWins}`);
-    }
-
-    else {
-        console.log(`RESULT: Computer won the entire game!
-        Your score: ${playerWins}
-        Computer's Score: ${computerWins}`);
-    }
-}
-
-else {
-    console.log("Wrong input, please enter again");
-}
+// Scissors button play
+scissors.addEventListener("click", () => {
+    roundLog("SCISSORS");
+})
